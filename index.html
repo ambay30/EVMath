@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVMath - Your Home for All EV Mathing</title>
+    <meta name="description" content="Find out if switching to an EV is right for you. Compare costs, calculate charging times, and make an informed decision about going electric.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ambay30.github.io/EVMath/">
+    <meta property="og:title" content="EVMath - Your Home for All EV Mathing">
+    <meta property="og:description" content="Find out if switching to an EV is right for you. Compare costs and calculate charging times.">
+    <meta property="og:image" content="https://ambay30.github.io/EVMath/og-image.svg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ambay30.github.io/EVMath/">
+    <meta property="twitter:title" content="EVMath - Your Home for All EV Mathing">
+    <meta property="twitter:description" content="Find out if switching to an EV is right for you. Compare costs and calculate charging times.">
+    <meta property="twitter:image" content="https://ambay30.github.io/EVMath/og-image.svg">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">⚡</div>
+            <h1>EVMath</h1>
+            <p class="tagline">Your home for all EV mathing</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('comparison')">💰 Cost Compare</button>
+            <button class="tab-btn" onclick="switchTab('charging')">🔌 Charging</button>
+        </div>
+
+        <!-- EV vs Gas Calculator -->
+        <section id="comparison-tab" class="tab-content active">
+            <div class="card">
+                <h2>Will an EV save you money?</h2>
+                <p class="subtitle">Let's do the math</p>
+
+                <div class="input-group">
+                    <label>⛽ Gas price</label>
+                    <div class="input-wrapper">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="gasPrice" value="3.50" step="0.01" min="0">
+                        <span class="input-suffix">/gal</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>🚗 Your car's MPG</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="mpg" value="30" step="1" min="1">
+                        <span class="input-suffix">MPG</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>⚡ Electricity cost</label>
+                    <div class="input-wrapper">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="electricityRate" value="0.13" step="0.01" min="0">
+                        <span class="input-suffix">/kWh</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>🔋 EV efficiency</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="evEfficiency" value="3.5" step="0.1" min="0.1">
+                        <span class="input-suffix">mi/kWh</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>📍 Yearly miles</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="milesPerYear" value="12000" step="100" min="0">
+                        <span class="input-suffix">miles</span>
+                    </div>
+                </div>
+
+                <button onclick="calculateComparison()" class="btn-primary">Calculate My Savings</button>
+                <div id="comparisonResult" class="result"></div>
+            </div>
+        </section>
+
+        <!-- Charging Station Calculator -->
+        <section id="charging-tab" class="tab-content">
+            <div class="card">
+                <h2>How long at this station?</h2>
+                <p class="subtitle">And how much will it cost?</p>
+
+                <div class="input-group">
+                    <label>🔋 Battery size</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="batteryCapacity" value="75" step="1" min="1">
+                        <span class="input-suffix">kWh</span>
+                    </div>
+                </div>
+
+                <div class="charge-slider-group">
+                    <label>Current charge</label>
+                    <input type="range" id="currentChargeSlider" min="0" max="100" value="20" oninput="updateChargeValue('current', this.value)">
+                    <div class="slider-value"><span id="currentChargeValue">20</span>%</div>
+                </div>
+
+                <div class="charge-slider-group">
+                    <label>Charge to</label>
+                    <input type="range" id="targetChargeSlider" min="0" max="100" value="80" oninput="updateChargeValue('target', this.value)">
+                    <div class="slider-value"><span id="targetChargeValue">80</span>%</div>
+                </div>
+
+                <div class="input-group">
+                    <label>⚡ Charger power</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="chargerPower" value="150" step="1" min="1">
+                        <span class="input-suffix">kW</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>💵 Cost per kWh</label>
+                    <div class="input-wrapper">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="chargingCost" value="0.40" step="0.01" min="0">
+                        <span class="input-suffix">/kWh</span>
+                    </div>
+                </div>
+
+                <button onclick="calculateCharging()" class="btn-primary">Calculate Charging</button>
+                <div id="chargingResult" class="result"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Making EV decisions easier</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
